@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#00E5FF">
+  <title>Sky & Max – JARVIS AI</title>
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./icon-192.png">
+  <style>
+    :root {
+      --bg: #070B14;
+      --surface: #0F172A;
+      --surface-elevated: #1E293B;
+      --sky: #00E5FF;
+      --max: #FFB300;
+      --border: #1E3A5F;
+      --text: #F8FAFC;
+      --text-muted: #94A3B8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .hud-title {
+      font-size: 16px;
+      font-weight: bold;
+      color: var(--sky);
+      letter-spacing: 1.5px;
+    }
+    .status-badge {
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+      background: rgba(0, 229, 255, 0.15);
+      border: 1px solid var(--sky);
+      color: var(--sky);
+      font-weight: bold;
+    }
+    .reactor-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 0 10px;
+    }
+    .reactor {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 2px solid var(--sky);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 25px rgba(0, 229, 255, 0.4);
+      position: relative;
+      animation: pulse 2s infinite ease-in-out;
+      cursor: pointer;
+    }
+    .reactor-inner {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--sky) 0%, rgba(0,229,255,0.2) 80%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--bg);
+      font-weight: bold;
+      font-size: 13px;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(0.96); box-shadow: 0 0 15px rgba(0, 229, 255, 0.3); }
+      50% { transform: scale(1.04); box-shadow: 0 0 35px rgba(0, 229, 255, 0.6); }
+    }
+    .chat-box {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .message {
+      max-width: 85%;
+      padding: 12px 14px;
+      border-radius: 14px;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+    .msg-sky {
+      align-self: flex-start;
+      background: rgba(0, 229, 255, 0.08);
+      border: 1px solid var(--sky);
+    }
+    .msg-max {
+      align-self: flex-start;
+      background: rgba(255, 179, 0, 0.08);
+      border: 1px solid var(--max);
+    }
+    .msg-user {
+      align-self: flex-end;
+      background: var(--surface-elevated);
+      border: 1px solid var(--border);
+    }
+    .sender-tag {
+      font-size: 11px;
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
+    .tag-sky { color: var(--sky); }
+    .tag-max { color: var(--max); }
+    .tag-user { color: var(--text-muted); }
+    .input-bar {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 10px 14px;
+      display: flex;
+      gap: 10px;
+    }
+    .input-bar input {
+      flex: 1;
+      background: var(--surface-elevated);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 10px 16px;
+      color: var(--text);
+      font-size: 14px;
+      outline: none;
+    }
+    .input-bar button {
+      background: var(--sky);
+      border: none;
+      color: var(--bg);
+      font-weight: bold;
+      padding: 10px 18px;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+    .pwa-banner {
+      background: rgba(0, 229, 255, 0.15);
+      border-bottom: 1px solid var(--sky);
+      padding: 8px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="pwaBanner" class="pwa-banner">
+    <span>💡 Install Sky & Max on your Home Screen or PC!</span>
+    <button id="installBtn" style="background:var(--sky); border:none; padding:4px 10px; border-radius:6px; font-weight:bold; cursor:pointer;">Install PWA</button>
+  </div>
+
+  <header>
+    <div class="hud-title">⚡ SKY & MAX – JARVIS AI</div>
+    <div class="status-badge" id="activeAssistantBadge">SKY & MAX ONLINE</div>
+  </header>
+
+  <div class="reactor-container">
+    <div class="reactor" id="reactorBtn">
+      <div class="reactor-inner">JARVIS</div>
+    </div>
+    <div style="font-size:11px; color:var(--text-muted); margin-top:8px;">CLICK REACTOR FOR VOICE INPUT • SAY "SKY" OR "MAX"</div>
+  </div>
+
+  <div class="chat-box" id="chatBox">
+    <div class="message msg-sky">
+      <div class="sender-tag tag-sky">SKY (AI)</div>
+      नमस्ते सर, मैं स्काई हूँ। आपकी पर्सनल एआई असिस्टेंट। जार्विस कोर पूरी तरह सक्रिय है। आदेश दीजिए सर?
+    </div>
+    <div class="message msg-max">
+      <div class="sender-tag tag-max">MAX (AI)</div>
+      और मैं हूँ मैक्स, सर! सारे सिस्टम और टास्क तैयार हैं। बस मेरा नाम लीजिए, काम हो जाएगा!
+    </div>
+  </div>
+
+  <div class="input-bar">
+    <input type="text" id="userInput" placeholder="Address 'Sky' or 'Max' (Type or speak)...">
+    <button id="sendBtn">Send</button>
+  </div>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW registration failed', err));
+    }
+
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      document.getElementById('pwaBanner').style.display = 'flex';
+    });
+
+    document.getElementById('installBtn').addEventListener('click', async () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        deferredPrompt = null;
+        document.getElementById('pwaBanner').style.display = 'none';
+      } else {
+        alert("To install on iPhone: Tap Share -> 'Add to Home Screen'. On Android: Tap 3 dots -> 'Install App'.");
+      }
+    });
+
+    const chatBox = document.getElementById('chatBox');
+    const userInput = document.getElementById('userInput');
+    const sendBtn = document.getElementById('sendBtn');
+    const reactorBtn = document.getElementById('reactorBtn');
+
+    function speak(text, isFemale = true) {
+      if ('speechSynthesis' in window) {
+        const utter = new SpeechSynthesisUtterance(text);
+        utter.pitch = isFemale ? 1.2 : 0.85;
+        utter.rate = isFemale ? 0.95 : 1.05;
+        window.speechSynthesis.speak(utter);
+      }
+    }
+
+    function addMessage(sender, text) {
+      const div = document.createElement('div');
+      const isUser = sender === 'USER';
+      const isSky = sender === 'SKY';
+      div.className = `message ${isUser ? 'msg-user' : isSky ? 'msg-sky' : 'msg-max'}`;
+      div.innerHTML = `<div class="sender-tag ${isUser ? 'tag-user' : isSky ? 'tag-sky' : 'tag-max'}">${isUser ? 'SIR' : sender + ' (AI)'}</div>${text}`;
+      chatBox.appendChild(div);
+      chatBox.scrollTop = chatBox.scrollHeight;
+      if (!isUser) speak(text, isSky);
+    }
+
+    function handleSend() {
+      const text = userInput.value.trim();
+      if (!text) return;
+      addMessage('USER', text);
+      userInput.value = '';
+
+      const lower = text.toLowerCase();
+      setTimeout(() => {
+        if (lower.includes('both') || lower.includes('dono')) {
+          addMessage('SKY', 'सर, मेरे विश्लेषण के अनुसार हमें व्यवस्थित योजना के साथ आगे बढ़ना चाहिए।');
+          setTimeout(() => addMessage('MAX', 'और सर, मैं स्काई से सहमत हूँ, हम इसे दोगुना तेजी से पूरा कर सकते हैं!'), 900);
+        } else if (lower.includes('max')) {
+          addMessage('MAX', 'हाँ सर! मैक्स हाजिर है। जो भी कार्य आप कहेंगे, वह तुरंत पूरा होगा!');
+        } else {
+          addMessage('SKY', 'सर, मैं आपकी बात समझ गई। आपकी सुरक्षा और सुविधा मेरी सर्वोच्च प्राथमिकता है।');
+        }
+      }, 600);
+    }
+
+    sendBtn.addEventListener('click', handleSend);
+    userInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleSend(); });
+
+    // Web Speech API
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      const recognizer = new SpeechRecognition();
+      recognizer.lang = 'hi-IN';
+      recognizer.onresult = (e) => {
+        const transcript = e.results[0][0].transcript;
+        userInput.value = transcript;
+        handleSend();
+      };
+      reactorBtn.addEventListener('click', () => {
+        recognizer.start();
+      });
+    } else {
+      reactorBtn.addEventListener('click', () => {
+        speak('सर, आपका जार्विस सिस्टम सक्रिय है।', true);
+      });
+    }
+  </script>
+</body>
+</html>

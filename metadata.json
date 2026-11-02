@@ -1,0 +1,6 @@
+{
+  "name": "Sky & Max",
+  "description": "JARVIS-style dual AI assistants (Sky & Max) with voice interaction, memory, reminders, FM radio, live news, automation skills, and GitHub in-app updater.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
