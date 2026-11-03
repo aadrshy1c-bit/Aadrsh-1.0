@@ -15,7 +15,7 @@ permissions:
 
 jobs:
   build-android-apk:
-  steps:
+      steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
