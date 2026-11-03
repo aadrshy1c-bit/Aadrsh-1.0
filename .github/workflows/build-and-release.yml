@@ -15,13 +15,7 @@ permissions:
 
 jobs:
   build-android-apk:
-     deploy-pwa-pages:
-      environment:
-      name: github-pages
-      name: Build Signed Android APK
-      runs-on: ubuntu-latest
-
-    steps:
+  steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
