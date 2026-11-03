@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "884379272386",
+    "project_id": "sky-and-max",
+    "storage_bucket": "sky-and-max.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:884379272386:android:d9cb4ede63a984a6bea75b",
+        "android_client_info": {
+          "package_name": "com.aistudio.skymax.aijarvis"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANcQUcil9rjdglXE2alQ6LMsKko0-rJBg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
