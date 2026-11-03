@@ -15,8 +15,11 @@ permissions:
 
 jobs:
   build-android-apk:
-    name: Build Signed Android APK
-    runs-on: ubuntu-latest
+     deploy-pwa-pages:
+      environment:
+      name: github-pages
+      name: Build Signed Android APK
+      runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repository
@@ -81,12 +84,6 @@ jobs:
             3. On first launch, tap **Authorize All** to grant permissions.
           draft: false
           prerelease: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-           name: github-pages' 
-  deploy-pwa-pages:
-    name: Deploy PWA to GitHub Pages
-    runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
