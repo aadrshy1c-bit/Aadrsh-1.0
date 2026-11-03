@@ -83,7 +83,7 @@ jobs:
           prerelease: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+           name: github-pages' 
   deploy-pwa-pages:
     name: Deploy PWA to GitHub Pages
     runs-on: ubuntu-latest
